@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            animation: colorChange 10s linear infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: #3498db;
+            }
+            25% {
+                background-color: #e74c3c;
+            }
+            50% {
+                background-color: #f1c40f;
+            }
+            75% {
+                background-color: #27ae60;
+            }
+            100% {
+                background-color: #9b59b6;
+            }
+        }
+
+        .stopwatch {
+            margin: 100px auto;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: moveIn 1s ease;
+        }
+
+        @keyframes moveIn {
+            0% {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 24px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .controls button {
+            margin: 5px;
+            padding: 8px 15px;
+            font-size: 18px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+
+        .controls button:active {
+            background-color: #1f6690;
+        }
+
+        .lap-button {
+            background-color: #27ae60;
+        }
+
+        .lap-button:hover {
+            background-color: #1e9843;
+        }
+
+        .lap-button:active {
+            background-color: #167e39;
+        }
+    </style>
+</head>
+<body>
+    <div class="stopwatch">
+        <h1>Stopwatch</h1>
+        <p id="display">00:00:00</p>
+        <div class="controls">
+            <button id="startStop" onclick="startStop()">Start</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="reset()">Reset</button>
+            <button class="lap-button" onclick="lap()">Lap</button>
+        </div>
+        <ul id="laps"></ul>
+    </div>
+    <script>
+        let colorIndex = 0;
+        const colors = ['#3498db', '#e74c3c', '#f1c40f', '#27ae60', '#9b59b6'];
+        
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+
+        setInterval(changeBackgroundColor, 10000); 
+        let timer; 
+        let isRunning = false;
+        let startTime;
+        let currentTime;
+
+        function startStop() {
+            const startStopButton = document.getElementById('startStop');
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                startStopButton.textContent = 'Start';
+            } else {
+                isRunning = true;
+                startTime = Date.now() - (currentTime || 0);
+                timer = setInterval(updateDisplay, 10);
+                startStopButton.textContent = 'Stop';
+            }
+        }
+
+        function updateDisplay() {
+            currentTime = Date.now() - startTime;
+            const formattedTime = formatTime(currentTime);
+            document.getElementById('display').textContent = formattedTime;
+        }
+
+        function pause() {
+            clearInterval(timer);
+            isRunning = false;
+            document.getElementById('startStop').textContent = 'Start';
+        }
+
+        function reset() {
+            clearInterval(timer);
+            isRunning = false;
+            currentTime = 0;
+            document.getElementById('display').textContent = '00:00:00';
+            document.getElementById('laps').innerHTML = '';
+            document.getElementById('startStop').textContent = 'Start';
+        }
+
+        function lap() {
+            if (isRunning) {
+                const formattedTime = formatTime(currentTime);
+                const lapItem = document.createElement('li');
+                lapItem.textContent = formattedTime;
+                document.getElementById('laps').appendChild(lapItem);
+            }
+        }
+
+        function formatTime(time) {
+            const date = new Date(time);
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+            const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+            return `${minutes}:${seconds}:${milliseconds}`;
+        }
+
+      
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #0c0cb6, #FF4500, #000000, #2f032f, #FFA500, #008000 , #0c0cb6 );
+            background-size: 600% 100%;
+            animation: rainbow 10s linear infinite;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 600% 0;
+            }
+        }
+
+        .navbar {
+            background-color: transparent;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .header {
+            background-image: url('background.jpg');
+            background-size: cover;
+            padding: 100px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 36px;
+        }
+
+        .about,
+        .skills,
+        .experience,
+        .artistry,
+        .contact,
+        .Showcase,
+        .Projects{
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        img {
+            width: 500px;
+            height: 500px;
+            border-radius: 1%;
+            margin-top: 1px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #ff4500;
+        }
+
+        .dark-mode {
+            background: #111;
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#artistry">Artistry</a>
+        <a href="#projects">Projects</a>
+        <a href="#Showcase">Showcase</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="header" id="home">
+        <h1>Sanskar's Portfolio</h1>
+        <img src="sanskar.jpg" alt="Sanskars Photo">
+    </div>
+
+    <div class="about" id="about">
+        <h2>About Me</h2>
+        <p>🎓 Student of Information Technology<br>
+        🏫 University of Mumbai | KJ Somaiya College</p>
+        <p>🖥️ Aspiring Programmer | 🎨 Creative Graphic Designer</p>
+        <p>💼 Technohacks Intern | 🎨 Passionate Artist</p>
+        <p>🌟 About Me:<br>
+        A dedicated Information Technology student at the University of Mumbai's esteemed KJ Somaiya College. I'm driven by a relentless passion for technology, creativity, and innovation. My diverse skill set spans programming, graphic design, and artistic expression.</p>
+    </div>
+
+    <div class="skills" id="skills">
+        <h2>Skills</h2>
+        <p>Proficient in programming languages<br>
+        Creative and design-oriented with expertise in Canva, Adobe Illustrator, and Photoshop<br>
+        Committed to turning ideas into visual and functional reality.<br>
+        I am an eager learner, always seeking to expand my skill set.</p>
+    </div>
+
+    <div class="experience" id="experience">
+        <h2>Experience</h2>
+        <p>I am currently interning at Technohacks, where I'm gaining hands-on experience in web development</p>
+        <p>Passionate about translating ideas into impactful, visually appealing designs.</p>
+    </div>
+
+    <div class="artistry" id="artistry">
+        <h2>Artistry</h2>
+        <p>As an artist, I find inspiration in sketching and painting.</p>
+        <p>I am a paid sketcher.</p>
+        <p>My art reflects my unique perspective and creative expression.</p>
+    </div>
+
+    <div class="contact" id="contact">
+        <h2>Contact</h2>
+        <p>🤝 Let's Connect:<br>
+        I'm enthusiastic about connecting with fellow IT enthusiasts, creatives, and professionals. Whether it's discussing technology, design, or art, I'm eager to engage in meaningful conversations and explore potential collaborations.</p>
+        <p>📧 Contact: dhawalsrivastava05@gmail.com</p>
+        <p>📩 Email: sanskarsrivastava04@gmail.com</p>
+        <p>📱 LinkedIn: <a href="https://www.linkedin.com/in/sanskar-srivastava-75a1691b5" target="_blank">linkedin.com/in/sanskar-srivastava-75a1691b5</a></p>
+        <button id="darkModeToggle">Toggle Dark Mode</button>
+    </div>
+    <div class="Showcase" id="Showcase">
+        <h2>Showcase</h2>
+        <p>My art Website:-<a href="d.html" target="_blank">LET'S EXPLORE</a> </p>
+
+    </div>
+    <div class="Projects" id="Projects">
+        <h2>Projects</h2>
+        <p>My projects:-<a href="projects.html" target="_blank">chaliye dekhte hai!!!</a> </p>
+
+    </div>
+
+
+    <script>
+       
+        document.querySelectorAll('.navbar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substr(1);
+                const targetElement = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth',
+                });
+            });
+        });
+
+       
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+
+</html>

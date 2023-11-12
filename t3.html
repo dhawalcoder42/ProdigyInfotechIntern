@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            animation: colorChange 10s linear infinite alternate;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: #3498db;
+            }
+            25% {
+                background-color: #e74c3c;
+            }
+            50% {
+                background-color: #f1c40f;
+            }
+            75% {
+                background-color: #27ae60;
+            }
+            100% {
+                background-color: #9b59b6;
+            }
+        }
+
+        .game-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cell:hover {
+            background-color: #2980b9;
+        }
+
+        .cell.x::before {
+            content: 'X';
+            color: red;
+        }
+
+        .cell.o::before {
+            content: 'O';
+            color: green;
+        }
+
+        .player-inputs {
+            margin: 10px 0;
+        }
+
+        .player-inputs input {
+            width: 100%;
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        #message {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Sanskar's Tic Tac Toe</h1>
+        <div class="player-inputs">
+            <input type="text" id="player1Name" placeholder="Player 1 Name">
+            <input type="text" id="player2Name" placeholder="Player 2 Name">
+        </div>
+        <div class="game-board">
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+            <div class="cell" onclick="makeMove(this)"></div>
+        </div>
+        <div id="message">Enter players' names and start the game.</div>
+        <button onclick="startGame()">Start Game</button>
+        <button onclick="resetBoard()">Reset Game</button>
+    </div>
+    <script>
+        let currentPlayer = 'X';
+        let isGameOver = false;
+        let movesCount = 0;
+        const cells = document.querySelectorAll('.cell');
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        function startGame() {
+            const player1Name = document.getElementById('player1Name').value;
+            const player2Name = document.getElementById('player2Name').value;
+
+            if (player1Name && player2Name) {
+                document.getElementById('message').textContent = `${player1Name}'s Turn`;
+                document.getElementById('player1Name').disabled = true;
+                document.getElementById('player2Name').disabled = true;
+                document.querySelector('.player-inputs button').disabled = true;
+            } else {
+                document.getElementById('message').textContent = 'Please enter both players\' names.';
+            }
+        }
+
+        function makeMove(cell) {
+            if (!cell.textContent && !isGameOver) {
+                cell.textContent = '';
+                cell.classList.add(currentPlayer.toLowerCase());
+                cell.style.backgroundColor = '#fff';
+                movesCount++;
+
+                if (checkWin()) {
+                    isGameOver = true;
+                    document.getElementById('message').textContent = `${currentPlayer} wins!`;
+                } else if (movesCount === 9) {
+                    isGameOver = true;
+                    document.getElementById('message').textContent = "It's a tie!";
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    const player1Name = document.getElementById('player1Name').value;
+                    const player2Name = document.getElementById('player2Name').value;
+                    document.getElementById('message').textContent =
+                        currentPlayer === 'X' ? `${player1Name}'s Turn` : `${player2Name}'s Turn`;
+                }
+            }
+        }
+
+        function checkWin() {
+            for (const combo of winningCombinations) {
+                const [a, b, c] = combo;
+                if (
+                    cells[a].classList.contains(currentPlayer.toLowerCase()) &&
+                    cells[b].classList.contains(currentPlayer.toLowerCase()) &&
+                    cells[c].classList.contains(currentPlayer.toLowerCase())
+                ) {
+                    highlightWinningCombo(a, b, c);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function highlightWinningCombo(a, b, c) {
+            cells[a].style.backgroundColor = '#27ae60';
+            cells[b].style.backgroundColor = '#27ae60';
+            cells[c].style.backgroundColor = '#27ae60';
+        }
+
+        function resetBoard() {
+            for (const cell of cells) {
+                cell.textContent = '';
+                cell.style.backgroundColor = '#3498db';
+                cell.classList.remove('x', 'o');
+            }
+            currentPlayer = 'X';
+            isGameOver = false;
+            movesCount = 0;
+            const player1Name = document.getElementById('player1Name').value;
+            const player2Name = document.getElementById('player2Name').value;
+            document.getElementById('message').textContent = `${player1Name}'s Turn`;
+        }
+    </script>
+</body>
+</html>

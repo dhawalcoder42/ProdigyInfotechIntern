@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #333;
+  overflow: hidden;
+}
+
+
+nav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.content {
+  padding-top: 80px; 
+}
+</style>
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a class="active" href="#home">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+</nav>
+
+<div class="content">
+<h2>Scroll Down to See the Effect</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui saepe porro, earum dicta autem omnis numquam temporibus, voluptatibus ad, in maxime mollitia architecto aut deserunt voluptates laborum fugit quos reprehenderit nostrum commodi dolor quas ea cum possimus! Nesciunt omnis, ducimus corporis quia pariatur eveniet eum.</p>
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit consectetur ullam nam ex quae, sed esse iste veritatis, aliquam asperiores rem, fuga architecto nostrum repudiandae beatae quos. Alias molestias maxime similique nisi cupiditate cumque adipisci, natus voluptatum dolores sed assumenda. Exercitationem, molestiae! Placeat, illum. Laborum veritatis sunt libero doloribus, aspernatur, corrupti sit tempora ex vel delectus ipsum tenetur dicta at, temporibus eum obcaecati sequi reiciendis velit suscipit enim in quae! Non itaque, aliquid explicabo repudiandae similique voluptatem aut necessitatibus, reprehenderit vel deleniti tempore id nam corrupti! Vitae totam placeat enim cum animi ex fugiat reprehenderit voluptatem quia? Nostrum, sapiente totam!</p>
+<p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima optio saepe quidem totam nesciunt facilis nemo sequi repellendus, deserunt a! Porro accusamus ex accusantium in iusto neque id officiis minima placeat odio! Omnis quasi libero dolorem molestiae quaerat praesentium vel deserunt repudiandae, deleniti numquam sint.</p>
+</div>
+
+<script>
+var navbar = document.getElementById("navbar");
+
+
+var sticky = navbar.offsetTop;
+
+
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+if (window.pageYOffset >= sticky) {
+navbar.classList.add("sticky")
+} else {
+navbar.classList.remove("sticky");
+}
+}
+
+
+var links = navbar.getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+links[i].addEventListener("mouseover", function() {
+this.style.backgroundColor = "#ddd";
+this.style.color = "black";
+});
+links[i].addEventListener("mouseout", function() {
+this.style.backgroundColor = "";
+this.style.color = "white";
+});
+}
+</script>
+
+</body>
+</html>

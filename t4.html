@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .weather-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        p {
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <h1>Weather App</h1>
+        <p id="location">Fetching weather data...</p>
+        <p id="weather">Fetching weather data...</p>
+        <p id="temperature">Fetching weather data...</p>
+    </div>
+
+    <script>
+        // Replace 'YOUR_API_KEY' with your actual API key
+        const apiKey = 'YOUR_API_KEY';
+
+        // Replace with a real API endpoint, e.g., OpenWeatherMap
+        const apiUrl = `https://api.example.com/weather?apiKey=${apiKey}&location=your_location`;
+
+        const locationElement = document.getElementById('location');
+        const weatherElement = document.getElementById('weather');
+        const temperatureElement = document.getElementById('temperature');
+
+        // Fetch weather data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                locationElement.textContent = `Location: ${data.location}`;
+                weatherElement.textContent = `Weather: ${data.weather}`;
+                temperatureElement.textContent = `Temperature: ${data.temperature}°C`;
+
+                // Set background based on weather condition
+                document.body.style.background = getBackgroundForWeather(data.weather);
+            })
+            .catch(error => {
+                console.error('Error fetching weather data:', error);
+                locationElement.textContent = 'Error fetching weather data';
+                weatherElement.textContent = '';
+                temperatureElement.textContent = '';
+            });
+
+        // Function to set background based on weather condition
+        function getBackgroundForWeather(weather) {
+            switch (weather.toLowerCase()) {
+                case 'rain':
+                    return 'linear-gradient(to bottom, #3498db, #2980b9)';
+                case 'sunny':
+                    return 'linear-gradient(to bottom, #f1c40f, #f39c12)';
+                case 'cloudy':
+                    return 'linear-gradient(to bottom, #ecf0f1, #bdc3c7)';
+                default:
+                    return 'linear-gradient(to bottom, #3498db, #2980b9)';
+            }
+        }
+    </script>
+</body>
+</html>
